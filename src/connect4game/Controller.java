@@ -31,13 +31,15 @@ public class Controller implements MouseListener{
 	}
 	
 	/* update modelu po odebraniu ruchu */
-	public void updateModel(int column, int line, Player player){
-		model.gameState.board[column][line] = (player==Player.Human)?1:-1;
+	public void updateModel(int column, int row, Player player){
+		//zalozylam zapis 1 gracz, -1 ia, można zmienic!
+		model.gameState.board[column][row] = (player==Player.Human)?1:-1;
+		model.gameState.current = player;
 	}
 	
 	/* przyjecie klikniec od gracza */
 	public void mouseClicked(MouseEvent e) {
-		if (player == Player.Human){
+		if (player == Player.Human){ //nie przyjmuj klikniec jesli kolej IA
 			if (e.getSource() instanceof Button){
 				Button button = (Button)e.getSource();
 				if (model.findRoom(button.column)>=0){
