@@ -31,12 +31,23 @@ public class Controller implements MouseListener{
 	}
 	
 	/* update modelu po odebraniu ruchu */
+	//zalozylam zapis 1 gracz, -1 ia, można zmienic!
 	public void updateModel(int column, int row, Player player){
-		//zalozylam zapis 1 gracz, -1 ia, można zmienic!
-		model.gameState.board[column][row] = (player==Player.Human)?1:-1;
+		if (player==Player.Human){
+			model.gameState.board[column][row]=1;
+			player = Player.Computer;
+			getNewState();
+			model.gameState.board[column][row]=-1;
+			player = Player.Human;
+		}
 		model.gameState.current = player;
 	}
 	
+	private void getNewState() {
+		// TODO Auto-generated method stub
+		
+	}
+
 	/* przyjecie klikniec od gracza */
 	public void mouseClicked(MouseEvent e) {
 		if (player == Player.Human){ //nie przyjmuj klikniec jesli kolej IA
@@ -44,12 +55,11 @@ public class Controller implements MouseListener{
 				Button button = (Button)e.getSource();
 				if (model.findRoom(button.column)>=0){
 					updateModel(button.column, model.findRoom(button.column),player);
+					updateViewer();
 				}
 			}
 			//Component source = e.getComponent();
-			player = Player.Computer;
 		}
-
 	}
 
 

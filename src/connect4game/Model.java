@@ -5,14 +5,14 @@ public class Model {
 
 	public State gameState;
 	int board_height = 7;
-	int board_weight = 6;
+	int board_width = 6;
 	
 	
 	
 	public int findRoom(int column){
-		for (int item : gameState.board[column]){
-			if (gameState.board[column][item]==0) //jezeli robimy board binarnie
-				return item;
+		for (int i=board_height; i>0;++i){
+			if (gameState.board[column][i]==0) //jezeli robimy board binarnie
+				return i;
 		}
 		return -1;
 	}
@@ -26,7 +26,7 @@ public class Model {
 		*/
 		int count = 0;
 		int value = (player==Player.Human)?1:-1;
-		for (int i=0; i<board_weight;++i){
+		for (int i=0; i<board_width;++i){
 			for (int j=0; j<board_height; ++j){
 				if (this.gameState.board[i][j] == value){
 					count += this.findVerticalStreak(i,j,lenght);
@@ -55,7 +55,7 @@ public class Model {
 	
 	public int findHorizontalStreak(int column, int row, int lenght){
 		int streak =0;
-		if (column+lenght<=this.board_weight){
+		if (column+lenght<=this.board_width){
 			for (int i=1; i<=lenght; ++i){
 				if (gameState.board[column][row]==gameState.board[column+i][row]){
 					streak+=1;
@@ -69,7 +69,7 @@ public class Model {
 	
 	public int findDiagonalUpStreak(int column, int row, int lenght){
 		int streak =0;
-		if (row+lenght<=this.board_height && column+lenght<=this.board_weight){
+		if (row+lenght<=this.board_height && column+lenght<=this.board_width){
 			for (int i=1; i<=lenght; ++i){
 				if (gameState.board[column][row]==gameState.board[column+i][row+i]){
 					streak+=1;
@@ -83,7 +83,7 @@ public class Model {
 	
 	public int findDiagonalDownStreak(int column, int row, int lenght){
 		int streak =0;
-		if (row+lenght<=this.board_height && column+lenght<=this.board_weight){
+		if (row+lenght<=this.board_height && column+lenght<=this.board_width){
 			for (int i=1; i<=lenght; ++i){
 				if (gameState.board[column][row]==gameState.board[column+i][row-i]){
 					streak+=1;
