@@ -2,9 +2,11 @@ package connect4game;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Observable;
+import java.util.Observer;
 
 
-public class Controller implements MouseListener{
+public class Controller implements MouseListener, Observer{
 
 	private Model model;
 	private Viewer viewer;
@@ -23,29 +25,27 @@ public class Controller implements MouseListener{
 		Controller game = new Controller();
 	}
 
-	/* update widoku, czyli wyrysowanie stany */
+	/* update widoku */
 	public void updateViewer(int column, int row, Player player){
-		//bin2swing(model.gameState.board);
-		//drawBoard();
 		viewer.drawCircle(column, row, player);
 	}
 	
 	/* update modelu po odebraniu ruchu */
-	//zalozylam zapis 1 gracz, -1 ia, można zmienic!
 	public void updateModel(int column, int row, Player player){
-		if (player==Player.Human){
-			model.gameState.board[column][row]=1;
-			player = Player.Computer;
-			getNewState();
-			model.gameState.board[column][row]=-1;
-			player = Player.Human;
-		}
+		model.gameState.board[column][row]=(player==Player.Human)?1:-1;
 		model.gameState.current = player;
 	}
 	
-	private void getNewState() {
-		// TODO Auto-generated method stub
-		
+	/* odebranie ruchu komputera */
+	public void update(Observable o, Object arg) {
+		/* int iaColumn = ((Model) o).getColumnNumber();
+		int iaRow = findRoom(iaColumn);
+		if (row>=0){
+			updateModel(iaColumn, iaRow, player);
+			updateViewer(iaColumn,iaRow, player);
+			player = Player.Human;
+		}
+		*/
 	}
 
 	/* przyjecie klikniec od gracza */
@@ -53,16 +53,27 @@ public class Controller implements MouseListener{
 		if (player == Player.Human){ //nie przyjmuj klikniec jesli kolej IA
 			if (e.getSource() instanceof Button){
 				Button button = (Button)e.getSource();
-				if (model.findRoom(button.column)>=0){
-					updateModel(button.column, model.findRoom(button.column),player);
-					updateViewer(button.column, model.findRoom(button.column),player);
+				int row = findRoom(button.column);
+				if (row>=0){
+					updateModel(button.column, row,player);
+					updateViewer(button.column,row,player);
+					player = Player.Computer;
 				}
 			}
-			//Component source = e.getComponent();
 		}
 	}
 
-
+	/* szukanie miejsca w kolumnie, sprawdzenie poprawnosci ruchu */
+	public int findRoom(int column){
+		for (int i=model.board_height-1; i>=0;--i){
+			System.out.println("findRoom-column: "+column);
+			System.out.println("findRoom-row: "+i);
+			if (model.gameState.board[column][i]==0) 
+				return i;
+		}
+		return -1;
+	}
+	
 	public void mousePressed(MouseEvent e) {
 	}
 
@@ -74,6 +85,7 @@ public class Controller implements MouseListener{
 
 	public void mouseExited(MouseEvent e) {
 	}
+
 
 	
 	
