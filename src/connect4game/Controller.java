@@ -4,7 +4,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 
-
 public class Controller implements MouseListener{
 
 	private Model model;
@@ -25,9 +24,10 @@ public class Controller implements MouseListener{
 	}
 
 	/* update widoku, czyli wyrysowanie stany */
-	public void updateViewer(){
+	public void updateViewer(int column, int row, Player player){
 		//bin2swing(model.gameState.board);
 		//drawBoard();
+		viewer.drawCircle(column, row, player);
 	}
 	
 	/* update modelu po odebraniu ruchu */
@@ -55,7 +55,7 @@ public class Controller implements MouseListener{
 				Button button = (Button)e.getSource();
 				if (model.findRoom(button.column)>=0){
 					updateModel(button.column, model.findRoom(button.column),player);
-					updateViewer();
+					updateViewer(button.column, model.findRoom(button.column),player);
 				}
 			}
 			//Component source = e.getComponent();

@@ -4,7 +4,10 @@ public class State {
 
 	int[][] board; 
 	Player current; //czyja kolej teraz
-	//wartość heurystyczna
-	
+	//wartosc heurystyczna
+
+	public State(){
+		this.board = new int[7][6];
+	}
 	
 }

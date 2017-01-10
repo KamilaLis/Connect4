@@ -1,17 +1,19 @@
 package connect4game;
 
-
 public class Model {
 
 	public State gameState;
-	int board_height = 7;
-	int board_width = 6;
+	int board_height = 6;
+	int board_width = 7;
 	
+	public Model(){
+		this.gameState = new State();
+	}
 	
 	
 	public int findRoom(int column){
-		for (int i=board_height; i>0;++i){
-			if (gameState.board[column][i]==0) //jezeli robimy board binarnie
+		for (int i=board_height-1; i>=0;--i){
+			if (gameState.board[column][i]==0) 
 				return i;
 		}
 		return -1;
