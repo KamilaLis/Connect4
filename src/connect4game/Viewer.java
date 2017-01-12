@@ -30,7 +30,7 @@ public class Viewer{
 		
 		JPanel panel = new JPanel();
 		frame.getContentPane().add(panel);
-		panel.setSize(new Dimension(420,360));
+		panel.setSize(new Dimension(60*width,60*height));
 		panel.setLocation(60,100);
 		panel.setBackground(new Color(99,104,102));
 		panel.setLayout(null);
@@ -49,7 +49,7 @@ public class Viewer{
 		
 		JPanel buttonPanel = new JPanel();
 		frame.getContentPane().add(buttonPanel);
-		buttonPanel.setSize(new Dimension(420,30));
+		buttonPanel.setSize(new Dimension(60*width,30));
 		buttonPanel.setLocation(60,70);
 		buttonPanel.setBackground(new Color(99,104,102));
 		buttonPanel.setLayout(new GridLayout(1,width));
@@ -69,8 +69,8 @@ public class Viewer{
 				if(player == Player.Human){
 					Circle c = new Circle(col.Yellow);
 					tabOfCircle[column][row].add(c);
-					System.out.println(column);
-					System.out.println(row);
+					System.out.println("drawCircle-column: "+column);
+					System.out.println("drawCircle-row: "+row);
 					tabOfCircle[column][row] = c;
 					c.setSize(new Dimension(60,60));
 					c.setVisible(true);
