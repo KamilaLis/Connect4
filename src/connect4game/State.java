@@ -7,7 +7,7 @@ public class State {
 	//wartosc heurystyczna
 
 	public State(){
-		this.board = new int[7][6];
+		this.board = new int[6][7];
 	}
 	
 }
