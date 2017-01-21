@@ -6,24 +6,18 @@ import java.time.*;
 
 public class Model{
 
-    /*public int[][] board = {{0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0},
-            {0, 0, 1, 0, 1, 0},
-            {1, 2, 1, 1, 2, 0},
-            {1, 2, 1, 2, 1, 2}};*/
 	public int[][] board;
 	public int board_height = 7;
 	public int board_width = 6;
 	//public int decision;
 	
 	public Model(){
-		this.board = new int[6][7];
+		this.board = new int[board_height][board_width];
 	}
 	
 	
     public int calculateIaMove(int time){
+    	int [][]board = this.board;
         Instant i1;
         i1 = Instant.now();
         int depth = 4;

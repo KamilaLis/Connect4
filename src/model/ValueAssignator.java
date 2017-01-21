@@ -14,10 +14,10 @@ public class ValueAssignator {
     private int pointsForFreeSpot;
     private int pointsForPlayersPuck;
 
-    ValueAssignator(int pointsForFreeSpot, int pointsForPlayersDot) {
+    ValueAssignator(int pointsForFreeSpot, int pointsForPlayersPuck) {
         this.pointsForFreeSpot = pointsForFreeSpot;
         //System.out.print("Points for free slot = " + pointsForFreeSpot);
-        this.pointsForFreeSpot = pointsForFreeSpot;
+        this.pointsForPlayersPuck = pointsForPlayersPuck;
         //System.out.print("Points for player's puck = " + pointsForPlayersPuck);
     }
 
@@ -30,13 +30,13 @@ public class ValueAssignator {
                 possibleCompletsCount++;
             }
         }
-        System.out.print("possibleCompletsCount = " + possibleCompletsCount + "\n");
-        if (possibleCompletsCount > 1) {
+        //System.out.print("possibleCompletsCount = " + possibleCompletsCount + "\n");
+        if (possibleCompletsCount > 2) {
             //assingning value of usefullness to the neighbouring slots
             int middle;
             int i = 0;
             int k = 0;
-            while (arragement[i] > 1) {
+            while (arragement[i] > 1 && i<6) {
                 i++;
             }
             if ((possibleCompletsCount % 2) == 0) {
@@ -51,16 +51,18 @@ public class ValueAssignator {
                     }
                 }
             } else {
-                middle = possibleCompletsCount / 2 + 1;
-                System.out.print("middle = " + middle + "\n");
+                middle = (possibleCompletsCount+ 1) / 2 ;
+                //System.out.print("middle = " + middle + "\n");
+                //System.out.print("odd number of possible complets\n");
                 gauges[middle + i - 1] = possibleCompletsCount - 2;
                 middle--;
                 k++;
                 for (int j = (middle + i - 1); middle > 0; middle--, k++, j = (middle + i - 1)) {
                     if (possibleCompletsCount > 3) {
                         gauges[j] = possibleCompletsCount - 2 - k;
-                        // System.out.print("middle = "+middle+"\n");
-                        // System.out.print("j = "+(j)+"\n");
+                        //System.out.print("middle = "+middle+"\n");
+                        //System.out.print("j = "+(j)+"\n");
+                        //System.out.print(">3, j = "+j+" j2 = "+(j + 2 * k)+"\n");
                         gauges[j + 2 * k] = possibleCompletsCount - 2 - k;
                     } else {
                         gauges[j] = possibleCompletsCount - 2;
@@ -74,9 +76,9 @@ public class ValueAssignator {
 
     int assignPoints(int gauge, int slotUseage) {
         if (slotUseage == 0) {
-            return gauge * this.pointsForFreeSpot;
+            return (gauge * this.pointsForFreeSpot);
         } else {
-            return gauge * this.pointsForPlayersPuck;
+            return (gauge * this.pointsForPlayersPuck);
         }
     }
 
@@ -86,6 +88,7 @@ public class ValueAssignator {
             int[] gauge = assignValuesOfGauges(arragements[i]);
             for (int j = 0; j < 6; j++) {
                 value += assignPoints(gauge[j], arragements[i][j]);
+                //System.out.print("gauge ="+gauge[j]+" slotUseage = "+arragements[i][j]+" value ="+value+"\n");
             }
         }
         return value;

@@ -94,15 +94,15 @@ public class Viewer{
 	public void drawCircle(int column, int row, Player player){
 				if(player == Player.Human){
 					Circle c = new Circle(col.Yellow);
-					tabOfCircle[column][row].add(c);
-					tabOfCircle[column][row] = c;
+					tabOfCircle[row][column].add(c);
+					tabOfCircle[row][column] = c;
 					c.setSize(new Dimension(60,60));
 					c.setVisible(true);
 				}
 				else{
 					Circle c = new Circle(col.Red);
-					tabOfCircle[column][row].add(c);
-					tabOfCircle[column][row] = c;
+					tabOfCircle[row][column].add(c);
+					tabOfCircle[row][column] = c;
 					c.setSize(new Dimension(60,60));
 					c.setVisible(true);
 				}	

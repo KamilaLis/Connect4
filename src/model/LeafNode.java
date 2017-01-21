@@ -5,7 +5,7 @@ import model.Tree.nodeType;
 
 public class LeafNode implements Node {
 
-    int value, alpha, beta, row, collumn, heuristicValue;
+    int value, alpha, beta, row, collumn;
     nodeType type;
     Scaner scan = new Scaner();
     ValueAssignator assignator = new ValueAssignator(1,3);
@@ -24,12 +24,11 @@ public class LeafNode implements Node {
         } else {
             this.value = 999;
         }
-        this.heuristicValue = this.value;
         this.row = scan.searchForPossibleSlot(move, tempBoard);
         //tempBoard[row][move] = this.giveCorrespondingPlayer();
     }
 
-
+    //@Override
     public int giveCorrespondingPlayer() {
         if (this.type == nodeType.maximizer) {
             return 2;
@@ -38,42 +37,48 @@ public class LeafNode implements Node {
         }
     }
     
-
+    //@Override
     public int[][] giveTempBoard(){
         return tempBoard;
     }
-
-    public nodeType giveType(){
+    
+    //@Override
+    public nodeType giveType() {
         return type;
     }
-    
 
-    public int giveBeta(){
+    //@Override
+    public int giveBeta() {
         return beta;
     }
-    
 
-    public int giveAlpha(){
+    //@Override
+    public int giveAlpha() {
         return alpha;
     }
 
-
+    //@Override
     public void assignValue() {
         int[][] arragement = scan.chceckArragements(this.giveCorrespondingPlayer(), row, collumn, tempBoard);
         if (scan.checkForFinalState(this.giveCorrespondingPlayer(), arragement)) {
-            heuristicValue = heuristicValue * (-1);
             isFinal = true;
+            System.out.print("         Final!\n");
         } else {
-            heuristicValue = this.assignator.calculateOverallValue(arragement);
+            if (this.giveCorrespondingPlayer() == 2) {
+                value = (-1) * this.assignator.calculateOverallValue(arragement);
+            } else {
+                value = this.assignator.calculateOverallValue(arragement);
+            }
         }
+        //System.out.print("heuristic for " + this.giveCorrespondingPlayer() + " is " + value + "\n");
     }
 
-
+    //@Override
     public int giveValue() {
         return value;
     }
 
-
+    //@Override
     public void checkIfNewValueIsBetter(int newValue, int move) {
         if (type == nodeType.maximizer) {
             if (newValue > value) {
@@ -85,28 +90,31 @@ public class LeafNode implements Node {
             }
         }
     }
-    
 
-    public void getParentValue(int parentValue){
-        value = value + parentValue;
+    //@Override
+    public void getParentValue(int parentValue) {
+        if (!isFinal) {
+            value = value + parentValue;
+        }
+        System.out.print("         heuristic with parent for " + this.giveCorrespondingPlayer() + " is                    " + value + "\n\n");
     }
-    
 
-    public int giveHeuristicValue(){
-        return heuristicValue;
+    //@Override
+    public int giveHeuristicValue() {
+        return value;
     }
-    
 
-    public boolean isFinal(){
+    //@Override
+    public boolean isFinal() {
         return this.isFinal;
     }
-    
 
-    public boolean prune(){
+    //@Override
+    public boolean prune() {
         return false;
     }
-    
 
+    //@Override
     public int giveDecision(){
         return -1;
     }

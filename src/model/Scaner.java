@@ -13,13 +13,13 @@ public class Scaner {
     int searchForPossibleSlot(int collumn, int[][] board) {
         int freeSlot = 999;
         int j;
-            for (j = 6; j >= 0; --j) {
+            for (j = 6; j >= 0; j--) {
                 if (board[j][collumn] == 0) {
                     freeSlot = j;
                     break;
                 }
             }
-            System.out.print("collumn: "+ collumn+" row: "+freeSlot+"\n");
+            //System.out.print("collumn: "+ collumn+" row: "+freeSlot+"\n");
         return freeSlot;
     }
 
@@ -30,18 +30,26 @@ public class Scaner {
                 if (board[w + i][k] != player && board[w + i][k] != 0) {
                     break;
                 } else {
-                    verticalArragement[3 - i] = board[w + i][k];
+                    if(board[w + i][k] == 0){
+                        verticalArragement[3 - i] = 0;
+                    } else {
+                        verticalArragement[3 - i] = 1;
+                    }
                 }
             } catch (ArrayIndexOutOfBoundsException e) {
                 break;
             }
         }
-        for (int i = 1; i <= 3; i++) {
+        for (int i = 1; i < 4; i++) {
             try {
                 if (board[w - i][k] != player && board[w - i][k] != 0) {
                     break;
                 } else {
-                    verticalArragement[i + 2] = board[w - i][k];
+                    if(board[w - i][k] == 0){
+                        verticalArragement[i + 2] = 0;
+                    } else {
+                        verticalArragement[i + 2] = 1;
+                    }
                 }
             } catch (ArrayIndexOutOfBoundsException e) {
                 break;
@@ -57,23 +65,33 @@ public class Scaner {
                 if (board[w][k - i] != player && board[w][k - i] != 0) {
                     break;
                 } else {
-                    horizontalArragement[3 - i] = board[w][k - i];
+                    if(board[w][k - i] == 0){
+                        horizontalArragement[3 - i] = 0;
+                    } else {
+                        horizontalArragement[3 - i] = 1;
+                    }
                 }
             } catch (ArrayIndexOutOfBoundsException e) {
                 break;
             }
         }
-        for (int i = 1; i <= 3; i++) {
+        for (int i = 1; i < 4; i++) {
             try {
                 if (board[w][k + i] != player && board[w][k + i] != 0) {
                     break;
                 } else {
-                    horizontalArragement[i + 2] = board[w][k + i];
+                     //System.out.print(board[w][k + i]+"\n");
+                    if(board[w][k + i] == 0){
+                        horizontalArragement[i + 2] = 0;
+                    } else {
+                        horizontalArragement[i + 2] = 1;
+                    }
                 }
             } catch (ArrayIndexOutOfBoundsException e) {
                 break;
             }
         }
+        //System.out.print(horizontalArragement[0]+" "+horizontalArragement[1]+" "+horizontalArragement[2]+" "+horizontalArragement[3]+" "+horizontalArragement[4]+" "+horizontalArragement[5]+"\n");
         return horizontalArragement;
     }
 
@@ -84,7 +102,11 @@ public class Scaner {
                 if (board[w + i][k - i] != player && board[w + i][k - i] != 0) {
                     break;
                 } else {
-                    diagonalLeftArragement[3 - i] = board[w + i][k - i];
+                    if(board[w + i][k - i] == 0){
+                        diagonalLeftArragement[3 - i] = 0;
+                    } else {
+                        diagonalLeftArragement[3 - i] = 1;
+                    }
                 }
             } catch (ArrayIndexOutOfBoundsException e) {
                 break;
@@ -95,7 +117,11 @@ public class Scaner {
                 if (board[w - i][k + i] != player && board[w - i][k + i] != 0) {
                     break;
                 } else {
-                    diagonalLeftArragement[i + 2] = board[w - i][k + i];
+                    if(board[w - i][k + i] == 0){
+                        diagonalLeftArragement[i + 2] = 0;
+                    } else {
+                        diagonalLeftArragement[i + 2] = 1;
+                    }
                 }
             } catch (ArrayIndexOutOfBoundsException e) {
                 break;
@@ -111,7 +137,11 @@ public class Scaner {
                 if (board[w - i][k - i] != player && board[w - i][k - i] != 0) {
                     break;
                 } else {
-                    diagonalRightArragement[3 - i] = board[w - i][k - i];
+                    if(board[w - i][k - i] == 0){
+                        diagonalRightArragement[3 - i] = 0;
+                    } else {
+                        diagonalRightArragement[3 - i] = 1;
+                    }
                 }
             } catch (ArrayIndexOutOfBoundsException e) {
                 break;
@@ -122,7 +152,11 @@ public class Scaner {
                 if (board[w + i][k + i] != player && board[w + i][k + i] != 0) {
                     break;
                 } else {
-                    diagonalRightArragement[i + 2] = board[w + i][k + i];
+                    if(board[w + i][k + i] == 0){
+                        diagonalRightArragement[i + 2] = 0;
+                    } else {
+                        diagonalRightArragement[i + 2] = 1;
+                    }
                 }
             } catch (ArrayIndexOutOfBoundsException e) {
                 break;
@@ -144,15 +178,20 @@ public class Scaner {
         for (int i = 0; i < 4; i++) {
             int subsequentTrue = 0;
             for (int j = 0; j < 6; j++) {
-                if (arragements[i][j] == player) {
+                //System.out.print("i = "+i+" j = "+j+" arragements[i][j] = "+arragements[i][j]);
+                if (arragements[i][j] == 1) {
                     subsequentTrue++;
+                    //System.out.print("i = "+i+" j = "+j+" arragements[i][j] = "+arragements[i][j]);
                     if (subsequentTrue == 3) {
+                        
                         return true;
                     }
                 } else if (arragements[i][j] == 0) {
+                    //System.out.print("i = "+i+" j = "+j+" arragements[i][j] = "+arragements[i][j]);
                     subsequentTrue = 0;
                 }
             }
+            //System.out.print("\n");
         }
         return false;
     }

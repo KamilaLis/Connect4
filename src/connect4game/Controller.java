@@ -30,19 +30,21 @@ public class Controller implements MouseListener{
 
 	/* update widoku */
 	public void updateViewer(int column, int row, Player player){
-		viewer.drawCircle(column, row, player);
+		viewer.drawCircle(row,column, player);
 	}
 	
 	/* update modelu po odebraniu ruchu */
 	public void updateModel(int column, int row, Player player){
-		model.board[column][row]=(player==Player.Human)?1:2;
-		//model.current = player;
+		model.board[row][column]=(player==Player.Human)?1:2;
+		printBoard();
 	}
 	
 	/* odebranie ruchu komputera */
 	public void update(int time) {
 		int iaColumn = model.calculateIaMove(time);
+		//System.out.print("iaColumn: "+iaColumn+ "\n");
 		int iaRow = findRoom(iaColumn);
+		//System.out.print("iaRow: "+iaRow);
 		if (iaRow>=0){
 			updateModel(iaColumn, iaRow, player);
 			updateViewer(iaColumn,iaRow, player);
@@ -80,11 +82,20 @@ public class Controller implements MouseListener{
 
 	/* szukanie miejsca w kolumnie, sprawdzenie poprawnosci ruchu */
 	public int findRoom(int column){
-		for (int i=model.board_height-1; i>=0;--i){
-			if (model.board[column][i]==0) 
+		for (int i=model.board_height-1; i>=0;i--){
+			if (model.board[i][column]==0) 
 				return i;
 		}
 		return -1;
+	}
+	
+	public void printBoard(){
+		for (int y=0; y<model.board_height;++y){
+			System.out.print("\n");
+			for (int x=0; x<model.board_width;++x){
+				System.out.print(model.board[y][x]);
+			}
+		}
 	}
 	
 	public void mousePressed(MouseEvent e) {
@@ -132,7 +143,7 @@ public class Controller implements MouseListener{
 		int value = (player==Player.Human)?1:2;
 		for (int i=0; i<model.board_width;++i){
 			for (int j=model.board_height-1; j>=0;--j){
-				if (model.board[i][j] == value){
+				if (model.board[j][i] == value){
 					count += this.findVerticalStreak(i,j,lenght);
 					count += this.findHorizontalStreak(i,j,lenght);
 					count += this.findDiagonalUpStreak(i,j,lenght);
@@ -147,7 +158,7 @@ public class Controller implements MouseListener{
 		int streak =0;
 		if (row-lenght+1>=0){
 			for (int i=1; i<=lenght-1; ++i){
-				if (model.board[column][row]==model.board[column][row-i]){
+				if (model.board[row][column]==model.board[row-i][column]){
 					streak+=1;
 				}
 				else break;
@@ -161,7 +172,7 @@ public class Controller implements MouseListener{
 		int streak =0;
 		if (column+lenght<=model.board_width){
 			for (int i=1; i<=lenght-1; ++i){
-				if (model.board[column][row]==model.board[column+i][row]){
+				if (model.board[row][column]==model.board[row][column+i]){
 					streak+=1;
 				}
 				else break;
@@ -175,7 +186,7 @@ public class Controller implements MouseListener{
 		int streak =0;
 		if (row-lenght+1>=0 && column+lenght<=model.board_width){
 			for (int i=1; i<=lenght-1; ++i){
-				if (model.board[column][row]==model.board[column+i][row-i]){
+				if (model.board[row][column]==model.board[row-i][column+i]){
 					streak+=1;
 				}
 				else break;
@@ -189,7 +200,7 @@ public class Controller implements MouseListener{
 		int streak =0;
 		if (lenght-row-1>=0 && lenght-column-2>=0){
 			for (int i=1; i<=lenght-1; ++i){
-				if (model.board[column][row]==model.board[column+i][row+i]){
+				if (model.board[row][column]==model.board[row+i][column+i]){
 					streak+=1;
 				}
 				else break;
