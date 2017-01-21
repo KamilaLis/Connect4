@@ -86,7 +86,7 @@ public class BranchNode implements Node {
         int[][] arragement = scan.chceckArragements(this.giveCorrespondingPlayer(), row, collumn, originalBoard);
         if (scan.checkForFinalState(this.giveCorrespondingPlayer(), arragement)) {
             isFinal = true;
-            System.out.print("         Final!\n");
+            //System.out.print("         Final!\n");
         } else {
             if (this.giveCorrespondingPlayer() == 2) {
                 heuristicValue = (-1) * this.assignator.calculateOverallValue(arragement);
@@ -121,12 +121,12 @@ public class BranchNode implements Node {
     public boolean prune() {
         if (type == nodeType.maximizer) {
             if (beta < value) {
-                System.out.print("pruned\n");
+                //System.out.print("pruned\n");
                 return true;
             }
         } else {
             if (alpha > value) {
-                System.out.print("pruned\n");
+                //System.out.print("pruned\n");
                 return true;
             }
         }
@@ -138,7 +138,7 @@ public class BranchNode implements Node {
         if (!isFinal) {
             heuristicValue = heuristicValue + parentValue;
         }
-        System.out.print("         heuristic with parent for " + this.giveCorrespondingPlayer() + " is                    " + heuristicValue + "\n\n");
+        //System.out.print("         heuristic with parent for " + this.giveCorrespondingPlayer() + " is                    " + heuristicValue + "\n\n");
     }
 
     //@Override

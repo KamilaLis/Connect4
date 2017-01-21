@@ -3,10 +3,11 @@ package connect4game;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+
 import model.Model;
 
 
-public class Controller implements MouseListener{
+public class Controller implements MouseListener, Runnable{
 
 	private Model model;
 	private Viewer viewer;
@@ -26,11 +27,23 @@ public class Controller implements MouseListener{
 	
 	public static void main(String[] args) {
 		Controller game = new Controller();
+		(new Thread(game)).start();
+	}
+	
+	/* watek obslugujacy AI */
+	public void run() {
+		while(!isOver){
+			System.out.print("runnin...\n");
+			if (player == Player.Computer){
+				update(100);
+			}
+		}
 	}
 
 	/* update widoku */
 	public void updateViewer(int column, int row, Player player){
 		viewer.drawCircle(row,column, player);
+		viewer.frame.setVisible(true);
 	}
 	
 	/* update modelu po odebraniu ruchu */
@@ -42,9 +55,7 @@ public class Controller implements MouseListener{
 	/* odebranie ruchu komputera */
 	public void update(int time) {
 		int iaColumn = model.calculateIaMove(time);
-		//System.out.print("iaColumn: "+iaColumn+ "\n");
 		int iaRow = findRoom(iaColumn);
-		//System.out.print("iaRow: "+iaRow);
 		if (iaRow>=0){
 			updateModel(iaColumn, iaRow, player);
 			updateViewer(iaColumn,iaRow, player);
@@ -60,8 +71,8 @@ public class Controller implements MouseListener{
 
 	/* przyjecie klikniec od gracza */
 	public void mouseClicked(MouseEvent e) {
-		if (player == Player.Human && !isOver){ 
-			if (e.getSource() instanceof Button){
+		 // obsluga przyciskow - zrzucenie kamienia 
+			if (e.getSource() instanceof Button && player == Player.Human && !isOver){
 				Button button = (Button)e.getSource();
 				int row = findRoom(button.column);
 				if (row>=0){
@@ -73,13 +84,19 @@ public class Controller implements MouseListener{
 					else {
 						player = Player.Computer;
 						viewer.writeText("Hmm...");
-						update(1000);
+						viewer.label.setVisible(true);
 					}
 				}
 			}
-		}
+			// obsluga menu - nowa gra 
+			else{
+				viewer.frame.setVisible(false); 
+				viewer.frame.dispose();
+				isOver = true;
+				(new Thread(new Controller())).start();
+			}
 	}
-
+	
 	/* szukanie miejsca w kolumnie, sprawdzenie poprawnosci ruchu */
 	public int findRoom(int column){
 		for (int i=model.board_height-1; i>=0;i--){
@@ -209,6 +226,8 @@ public class Controller implements MouseListener{
 		if (streak==lenght-1) return 1;
 		else return 0;
 	}
+
+
 	
 	
 

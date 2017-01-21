@@ -1,7 +1,6 @@
 package connect4game;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
+//import java.awt.event.KeyEvent;
 import java.awt.event.MouseListener;
 import java.awt.*;
 import javax.swing.*;
@@ -14,7 +13,7 @@ public class Viewer{
 	private static int width = 6;
 	Circle[][] tabOfCircle = new Circle[width][height]; 
 	JFrame frame = new JFrame("Connect4");
-	private JLabel label;
+	JLabel label;
 	
 	public Viewer(Controller ml) {
 		listener = ml;
@@ -22,7 +21,6 @@ public class Viewer{
 	
 	public void init(){
 		//tworzenie gui
-		
 		Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
 		frame.setLocation( (screensize.width - 800)/2,(screensize.height - 600 )/2);
 		frame.setSize( new Dimension(500,600) );
@@ -75,19 +73,34 @@ public class Viewer{
         label = new JLabel(" ");
         frame.getContentPane().add(label);
         label.setSize(200,20);
-        label.setLocation(20, screensize.height-210);
+        label.setLocation(50,530);
         
-        /*JMenuBar menuBar = new JMenuBar();
+        /* menu */
+        JMenuBar menuBar = new JMenuBar();
         frame.setJMenuBar(menuBar);
-        JMenu menu = new JMenu("Another Menu");
-        menu.setMnemonic(KeyEvent.VK_N);
+        JMenu menu = new JMenu("Game");
+        //menu.setMnemonic(KeyEvent.VK_N);
         menuBar.add(menu);
-        JMenuItem menuItem = new JMenuItem("A text-only menu item",
+        
+        JMenu submenu = new JMenu("New game");
+        submenu.addMouseListener(listener);
+        //submenu.setMnemonic(KeyEvent.VK_S);
+        /*JMenuItem menuItem = new JMenuItem("Easy",
                 KeyEvent.VK_T);
         menuItem.setAccelerator(KeyStroke.getKeyStroke(
-        		KeyEvent.VK_1, ActionEvent.ALT_MASK));
-        menu.add(menuItem);*/
-		
+                KeyEvent.VK_2, ActionEvent.ALT_MASK));
+        menuItem.addMouseListener(listener);
+        submenu.add(menuItem);
+        JMenuItem menuItem2 = new JMenuItem("Difficult",
+                KeyEvent.VK_T);
+        menuItem2.setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_2, ActionEvent.ALT_MASK));
+        menuItem2.addMouseListener(listener);
+        submenu.add(menuItem2);*/
+        menu.add(submenu);
+		frame.repaint();
+		frame.revalidate();
+		frame.doLayout();
 		frame.setVisible(true);
 	}
 	

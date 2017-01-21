@@ -27,28 +27,28 @@ class Tree implements GameTree{
         lol++;
         //System.out.print(level+" "+numberOfActiveNodes[level]+"\n");
         numberOfActiveNodes[level]++;
-        System.out.print("lol= " + lol + "\n");
-        System.out.print("level: " + level + " no. of active nodes " + numberOfActiveNodes[level] + "\n");
+        //System.out.print("lol= " + lol + "\n");
+        //System.out.print("level: " + level + " no. of active nodes " + numberOfActiveNodes[level] + "\n");
         if (level + 1 == depth) {
             if (Parent.giveType() == nodeType.maximizer) {
-                System.out.print("         Created LeafNode, minimizer, no:" + (numberOfActiveNodes[level] - 1) + "\n");
+                //System.out.print("         Created LeafNode, minimizer, no:" + (numberOfActiveNodes[level] - 1) + "\n");
                 return new LeafNode(Parent.giveAlpha(), Parent.giveBeta(),
                         nodeType.minimizer, (numberOfActiveNodes[level] - 1),
                         Parent.giveTempBoard());
             } else {
-                System.out.print("         Created LeafNode, maximizer, no:" + (numberOfActiveNodes[level] - 1) + "\n");
+                //System.out.print("         Created LeafNode, maximizer, no:" + (numberOfActiveNodes[level] - 1) + "\n");
                 return new LeafNode(Parent.giveAlpha(), Parent.giveBeta(),
                         nodeType.maximizer, (numberOfActiveNodes[level] - 1),
                         Parent.giveTempBoard());
             }
         } else {
             if (Parent.giveType() == nodeType.maximizer) {
-                System.out.print("         Created BranchNode, minimizer, no:" + (numberOfActiveNodes[level] - 1) + "\n");
+                //System.out.print("         Created BranchNode, minimizer, no:" + (numberOfActiveNodes[level] - 1) + "\n");
                 return new BranchNode(Parent.giveAlpha(), Parent.giveBeta(),
                         nodeType.minimizer, (numberOfActiveNodes[level] - 1),
                         Parent.giveTempBoard());
             } else {
-                System.out.print("         Created BramchNode, maximizer, no:" + (numberOfActiveNodes[level] - 1) + "\n");
+                //System.out.print("         Created BramchNode, maximizer, no:" + (numberOfActiveNodes[level] - 1) + "\n");
                 return new BranchNode(Parent.giveAlpha(), Parent.giveBeta(),
                         nodeType.maximizer, (numberOfActiveNodes[level] - 1),
                         Parent.giveTempBoard());
@@ -70,7 +70,6 @@ class Tree implements GameTree{
         ++level;
         while (level > 0) {
             
-            System.out.print(level + "\n");
                 if (level == (depth - 1) && this.numberOfActiveNodes[level] < 6) {
 
                     if (this.numberOfActiveNodes[level] > 0 && nodeArray[level - 1].prune()) {
@@ -79,10 +78,10 @@ class Tree implements GameTree{
                         level = level - 2;
                     } else {
                         nodeArray[level] = this.createChildNode(nodeArray[level - 1], level);
-                        int[][] s = nodeArray[level - 1].giveTempBoard();
+                        //int[][] s = nodeArray[level - 1].giveTempBoard();
                         //System.out.print("Miejsce nefralgiczne: "+s[3][0]+"\n");
                         nodeArray[level].assignValue();
-                        //System.out.print("Parent value = "+nodeArray[level - 1].giveHeuristicValue()+"\n");
+                        System.out.print("Parent value = "+nodeArray[level - 1].giveHeuristicValue()+"\n");
                         nodeArray[level].getParentValue(nodeArray[level - 1].giveHeuristicValue());
                         nodeArray[level - 1].checkIfNewValueIsBetter(nodeArray[level].giveHeuristicValue(), this.numberOfActiveNodes[level]);
                         level--;
@@ -96,7 +95,7 @@ class Tree implements GameTree{
                         //int[][] s = nodeArray[level - 1].giveTempBoard();
                         //System.out.print("Miejsce nefralgiczne: "+s[3][0]+"\n");
                         nodeArray[level].assignValue();
-                        //System.out.print("value: "+nodeArray[level].giveHeuristicValue()+"\n");
+                        System.out.print("value: "+nodeArray[level].giveHeuristicValue()+"\n");
                         if (nodeArray[level].isFinal()) {
                             nodeArray[level - 1].checkIfNewValueIsBetter(nodeArray[level].giveHeuristicValue(), this.numberOfActiveNodes[level]);
                             level--;

@@ -178,20 +178,20 @@ public class Scaner {
         for (int i = 0; i < 4; i++) {
             int subsequentTrue = 0;
             for (int j = 0; j < 6; j++) {
-                //System.out.print("i = "+i+" j = "+j+" arragements[i][j] = "+arragements[i][j]);
+                System.out.print("i = "+i+" j = "+j+" arragements[i][j] = "+arragements[i][j]);
                 if (arragements[i][j] == 1) {
                     subsequentTrue++;
-                    //System.out.print("i = "+i+" j = "+j+" arragements[i][j] = "+arragements[i][j]);
+                    System.out.print("i = "+i+" j = "+j+" arragements[i][j] = "+arragements[i][j]);
                     if (subsequentTrue == 3) {
                         
                         return true;
                     }
                 } else if (arragements[i][j] == 0) {
-                    //System.out.print("i = "+i+" j = "+j+" arragements[i][j] = "+arragements[i][j]);
+                    System.out.print("i = "+i+" j = "+j+" arragements[i][j] = "+arragements[i][j]);
                     subsequentTrue = 0;
                 }
             }
-            //System.out.print("\n");
+            System.out.print("\n");
         }
         return false;
     }

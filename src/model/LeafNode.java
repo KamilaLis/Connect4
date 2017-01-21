@@ -62,7 +62,7 @@ public class LeafNode implements Node {
         int[][] arragement = scan.chceckArragements(this.giveCorrespondingPlayer(), row, collumn, tempBoard);
         if (scan.checkForFinalState(this.giveCorrespondingPlayer(), arragement)) {
             isFinal = true;
-            System.out.print("         Final!\n");
+            //System.out.print("         Final!\n");
         } else {
             if (this.giveCorrespondingPlayer() == 2) {
                 value = (-1) * this.assignator.calculateOverallValue(arragement);
@@ -96,7 +96,7 @@ public class LeafNode implements Node {
         if (!isFinal) {
             value = value + parentValue;
         }
-        System.out.print("         heuristic with parent for " + this.giveCorrespondingPlayer() + " is                    " + value + "\n\n");
+        //System.out.print("         heuristic with parent for " + this.giveCorrespondingPlayer() + " is                    " + value + "\n\n");
     }
 
     //@Override

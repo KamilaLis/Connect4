@@ -9,7 +9,6 @@ public class Model{
 	public int[][] board;
 	public int board_height = 7;
 	public int board_width = 6;
-	//public int decision;
 	
 	public Model(){
 		this.board = new int[board_height][board_width];
@@ -26,7 +25,7 @@ public class Model{
             Tree t = new Tree(depth, board);
             decision = t.calculateDecision();
             depth++;
-            Instant i3;
+            //Instant i3;
             System.out.print("decision:"+decision+"\n");
         }
         return decision;
