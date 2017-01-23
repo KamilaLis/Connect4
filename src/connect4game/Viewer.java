@@ -1,14 +1,16 @@
 package connect4game;
 
-//import java.awt.event.KeyEvent;
+
 import java.awt.event.MouseListener;
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.event.MenuListener;
 
 import connect4game.Circle.col;
 
 public class Viewer{
 	private MouseListener listener;
+	private MenuListener menulistener;
 	private static int height = 7;
 	private static int width = 6;
 	Circle[][] tabOfCircle = new Circle[width][height]; 
@@ -17,6 +19,7 @@ public class Viewer{
 	
 	public Viewer(Controller ml) {
 		listener = ml;
+		menulistener = ml;
 	}
 	
 	public void init(){
@@ -77,13 +80,12 @@ public class Viewer{
         
         /* menu */
         JMenuBar menuBar = new JMenuBar();
-        frame.setJMenuBar(menuBar);
-        JMenu menu = new JMenu("Game");
-        //menu.setMnemonic(KeyEvent.VK_N);
+        JMenu menu = new JMenu("New game");
+        menu.addMenuListener(menulistener);
         menuBar.add(menu);
-        
-        JMenu submenu = new JMenu("New game");
-        submenu.addMouseListener(listener);
+        frame.setJMenuBar(menuBar);
+        /*JMenuItem submenu = new JMenu("New game");
+        submenu.addActionListener(menulistener);
         //submenu.setMnemonic(KeyEvent.VK_S);
         /*JMenuItem menuItem = new JMenuItem("Easy",
                 KeyEvent.VK_T);
@@ -97,7 +99,7 @@ public class Viewer{
                 KeyEvent.VK_2, ActionEvent.ALT_MASK));
         menuItem2.addMouseListener(listener);
         submenu.add(menuItem2);*/
-        menu.add(submenu);
+        //menu.add(submenu);
 		frame.repaint();
 		frame.revalidate();
 		frame.doLayout();

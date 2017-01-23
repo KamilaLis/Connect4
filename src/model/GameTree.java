@@ -10,7 +10,8 @@ package model;
  * @author Plk. Borkow
  */
 public interface GameTree {
-    Node createRootNode();
-    Node createChildNode(Node Parent, int level);
+    //Node createRootNode();
+    //Node createChildNode(Node Parent, int level);
+    void createNode(Node parentNode);
     int calculateDecision();
 }

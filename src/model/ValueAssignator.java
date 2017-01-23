@@ -1,14 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package model;
 
-/**
- *
- * @author Plk. Borkow
- */
+
 public class ValueAssignator {
 
     private int pointsForFreeSpot;
@@ -16,9 +9,7 @@ public class ValueAssignator {
 
     ValueAssignator(int pointsForFreeSpot, int pointsForPlayersPuck) {
         this.pointsForFreeSpot = pointsForFreeSpot;
-        //System.out.print("Points for free slot = " + pointsForFreeSpot);
         this.pointsForPlayersPuck = pointsForPlayersPuck;
-        //System.out.print("Points for player's puck = " + pointsForPlayersPuck);
     }
 
     int[] assignValuesOfGauges(int[] arragement) {
@@ -30,7 +21,6 @@ public class ValueAssignator {
                 possibleCompletsCount++;
             }
         }
-        //System.out.print("possibleCompletsCount = " + possibleCompletsCount + "\n");
         if (possibleCompletsCount > 2) {
             //assingning value of usefullness to the neighbouring slots
             int middle;

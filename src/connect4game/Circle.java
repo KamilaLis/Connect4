@@ -5,6 +5,11 @@ import javax.swing.*;
 
 public class Circle extends JPanel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public enum col {Red, Gray, Yellow};
 	col c = col.Yellow;
 	public Circle(col c){		

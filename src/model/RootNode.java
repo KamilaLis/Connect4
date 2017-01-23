@@ -8,6 +8,8 @@ public class RootNode implements Node {
     int value, alpha, beta, decision, newMove;
     int[][] tempBoard;
     Tree.nodeType type;
+    int numberOfChildren = 0;
+    boolean directFinal = false;
 
     RootNode(int[][] board) {
         this.value = -999;
@@ -19,6 +21,24 @@ public class RootNode implements Node {
         this.tempBoard = board;
     }
 
+    //@Override
+    public int giveNumberOfChildren() {
+        return numberOfChildren;
+    }
+    
+    //@Override
+    public boolean isNextChildNodePossible(){
+        if(numberOfChildren < tempBoard[0].length ){
+            return true;
+        }
+        return false;
+    }
+    
+    //@Override
+    public void incrementNumberOfChildren(){
+        numberOfChildren++;
+    }
+    
     //@Override
     public int giveCorrespondingPlayer() {
         if (this.type == nodeType.maximizer) {
@@ -54,10 +74,14 @@ public class RootNode implements Node {
     }
 
     //@Override
-    public void checkIfNewValueIsBetter(int newValue, int move) {
-        if (newValue > value) {
+    public void checkIfNewValueIsBetter(int newValue, boolean isFinal) {
+        if (newValue >= value) {
             value = newValue;
-            decision = newMove;
+            alpha = value;
+            decision = (numberOfChildren-1);
+        }
+        if(isFinal){
+            directFinal = true;
         }
     }
     
@@ -82,14 +106,23 @@ public class RootNode implements Node {
         //System.out.print("Root node doesn't represent any move, hence it can't be a final node\n");
         return false;
     }
-    
+
     //@Override
-    public boolean prune(){
+    public boolean prune() {
+        if (beta <= value) {
+            System.out.print("pruned\n");
+            return true;
+        }
         return false;
     }
-    
+
     //@Override
-    public int giveDecision(){
+    public int giveDecision() {
         return decision;
+    }
+
+    //@Override
+    public boolean foundDirectFinal() {
+        return directFinal;
     }
 }

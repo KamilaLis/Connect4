@@ -12,11 +12,15 @@ import model.Tree.nodeType;
  * @author Plk. Borkow
  */
 public interface Node {
+    boolean foundDirectFinal();
+    void incrementNumberOfChildren();
     void getParentValue(int parentValue);
     void assignValue();
-    void checkIfNewValueIsBetter(int newValue, int move);
+    void checkIfNewValueIsBetter(int newValue, boolean isFinal);
     int giveHeuristicValue();
     int giveValue();
+    int giveNumberOfChildren();
+    boolean isNextChildNodePossible();
     int giveCorrespondingPlayer();
     int[][] giveTempBoard();
     nodeType giveType();

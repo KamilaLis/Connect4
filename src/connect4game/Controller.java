@@ -3,11 +3,14 @@ package connect4game;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.event.MenuEvent;
+import javax.swing.event.MenuListener;
+
 
 import model.Model;
 
 
-public class Controller implements MouseListener, Runnable{
+public class Controller implements MouseListener, Runnable, MenuListener{
 
 	private Model model;
 	private Viewer viewer;
@@ -33,9 +36,19 @@ public class Controller implements MouseListener, Runnable{
 	/* watek obslugujacy AI */
 	public void run() {
 		while(!isOver){
-			System.out.print("runnin...\n");
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e1) {
+				e1.printStackTrace();
+			}
+			
 			if (player == Player.Computer){
-				update(100);
+				System.out.print("getIaMove\n");
+				try {
+					getAIMove(500);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 	}
@@ -50,16 +63,21 @@ public class Controller implements MouseListener, Runnable{
 	public void updateModel(int column, int row, Player player){
 		model.board[row][column]=(player==Player.Human)?1:2;
 		printBoard();
+		System.out.print("\n");
 	}
 	
 	/* odebranie ruchu komputera */
-	public void update(int time) {
-		int iaColumn = model.calculateIaMove(time);
+	public void getAIMove(int time) throws InterruptedException {
+		model.calculateAIMove(time);
+		Thread.sleep(1200);
+		int iaColumn = model.decision;
+		System.out.print("iaColumn = " +iaColumn+ "\n");
 		int iaRow = findRoom(iaColumn);
 		if (iaRow>=0){
 			updateModel(iaColumn, iaRow, player);
 			updateViewer(iaColumn,iaRow, player);
 			if (isConnect4(player)){
+				Thread.sleep(1000);
 				isOver = true;
 			}
 			else{
@@ -71,7 +89,6 @@ public class Controller implements MouseListener, Runnable{
 
 	/* przyjecie klikniec od gracza */
 	public void mouseClicked(MouseEvent e) {
-		 // obsluga przyciskow - zrzucenie kamienia 
 			if (e.getSource() instanceof Button && player == Player.Human && !isOver){
 				Button button = (Button)e.getSource();
 				int row = findRoom(button.column);
@@ -87,13 +104,6 @@ public class Controller implements MouseListener, Runnable{
 						viewer.label.setVisible(true);
 					}
 				}
-			}
-			// obsluga menu - nowa gra 
-			else{
-				viewer.frame.setVisible(false); 
-				viewer.frame.dispose();
-				isOver = true;
-				(new Thread(new Controller())).start();
 			}
 	}
 	
@@ -128,7 +138,7 @@ public class Controller implements MouseListener, Runnable{
 	}
 
 	/* sprawdzenie czy na planszy jest czworka */
-	public boolean isConnect4(Player player){
+	public boolean isConnect4(Player player) {
 		if (findStreak(player,4)>0){
 			viewer.writeText(player + " wins!");
 			return true;
@@ -226,6 +236,28 @@ public class Controller implements MouseListener, Runnable{
 		if (streak==lenght-1) return 1;
 		else return 0;
 	}
+
+	public void menuSelected(MenuEvent e) {
+		// obsluga menu - nowa gra 
+		System.out.print("menu selected");
+		viewer.frame.setVisible(false); 
+		viewer.frame.dispose();
+		isOver = true;
+		(new Thread(new Controller())).start();
+		
+	}
+
+	public void menuDeselected(MenuEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void menuCanceled(MenuEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
 
 
 	
